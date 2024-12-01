@@ -4,6 +4,7 @@ import { adminRouter } from "./Routes/AdminRoute.js";
 import { EmployeeRouter } from "./Routes/EmployeeRoute.js";
 import Jwt from "jsonwebtoken";
 import cookieParser from "cookie-parser";
+import sql from 'mysql';
 
 const app = express() 
 app.use(cors({
