@@ -26,6 +26,26 @@ router.post("/adminlogin", (req, res) => {
   });
 });
 
+router.post('/add_department', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO department 
+    (name,location,numberofemployees) 
+    VALUES (?)`;
+    const values = [
+        req.body.name,
+        req.body.location,
+        req.body.numberofemployees
+    ];
+
+    console.log("Request Data:", values);
+
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
 router.get('/department', (req, res) => {
     const sql = "SELECT * FROM department";
     con.query(sql, (err, result) => {
@@ -34,13 +54,6 @@ router.get('/department', (req, res) => {
     })
 })
 
-router.post('/add_department', (req, res) => {
-    const sql = "INSERT INTO department (`name`) VALUES (?)"
-    con.query(sql, [req.body.department], (err, result) => {
-        if(err) return res.json({Status: false, Error: "Query Error"})
-        return res.json({Status: true})
-    })
-})
 
 // image upload 
 const storage = multer.diskStorage({

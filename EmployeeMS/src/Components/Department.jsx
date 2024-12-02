@@ -21,12 +21,17 @@ const Department = () => {
         <div className='d-flex justify-content-center'>
             <h3>Department List</h3>
         </div>
-        <Link to="/dashboard/add_department" className='btn btn-success'>Add Department</Link>
+        <Link to="/dashboard/add_department" className='btn btn-success'>
+        Add Department
+        </Link>
         <div className='mt-3'>
             <table className='table'>
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Location</th>
+                        <th>Number of Employees</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -34,6 +39,8 @@ const Department = () => {
                         department.map(c => (
                             <tr>
                                 <td>{c.name}</td>
+                                <td>{c.location}</td>
+                                <td>{c.numberofemployees}</td>
                             </tr>
                         ))
                     }
