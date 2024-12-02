@@ -81,6 +81,170 @@ router.get('/payroll', (req, res) => {
     })
 })
 
+//PERFORMANCE REVIEW:
+router.post('/add_performance', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO performance 
+    (reviewdate,ratings,feedback,goals) 
+    VALUES (?)`;
+    const values = [
+        req.body.reviewdate,
+        req.body.ratings,
+        req.body.feedback,
+        req.body.goals,
+    ];
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
+router.get('/performance', (req, res) => {
+    const sql = "SELECT * FROM performance";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+//LEAVE REQUEST:
+router.post('/add_leaves', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO leaves
+    (type,startdate,enddate,reason) 
+    VALUES (?)`;
+    const values = [
+        req.body.type,
+        req.body.startdate,
+        req.body.enddate,
+        req.body.reason,
+    ];
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
+router.get('/leaves', (req, res) => {
+    const sql = "SELECT * FROM leaves";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+//MARK ATTENDANCE:
+router.post('/add_attendance', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO attendance
+    (date,timein,duration) 
+    VALUES (?)`;
+    const values = [
+        req.body.date,
+        req.body.timein,
+        req.body.duration,
+    ];
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
+router.get('/attendance', (req, res) => {
+    const sql = "SELECT * FROM attendance";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+//ADD TRAINING DETAILS:
+router.post('/add_training', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO training
+    (name,description,startdate,duration) 
+    VALUES (?)`;
+    const values = [
+        req.body.name,
+        req.body.description,
+        req.body.startdate,
+        req.body.duration
+    ];
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
+router.get('/training', (req, res) => {
+    const sql = "SELECT * FROM training";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+//ADD EMPLOYEE BENEFITS:
+router.post('/add_benefits', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO benefits
+    (type,startdate,duration) 
+    VALUES (?)`;
+    const values = [
+        req.body.type,
+        req.body.startdate,
+        req.body.duration
+    ];
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
+router.get('/benefits', (req, res) => {
+    const sql = "SELECT * FROM benefits";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+//INITIATE MEETINGS:
+router.post('/add_meetings', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO meetings
+    (title,description,date,starttime,duration,location,agenda) 
+    VALUES (?)`;
+    const values = [
+        req.body.title,
+        req.body.description,
+        req.body.date,
+        req.body.starttime,
+        req.body.duration,
+        req.body.location,
+        req.body.agenda
+    ];
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
+router.get('/meetings', (req, res) => {
+    const sql = "SELECT * FROM meetings";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+
 // image upload 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {

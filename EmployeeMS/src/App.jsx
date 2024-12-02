@@ -16,6 +16,19 @@ import EmployeeDetail from './Components/EmployeeDetail'
 import PrivateRoute from './Components/PrivateRoute'
 import Payroll from './Components/Payroll'
 import AddPayroll from './Components/AddPayroll'
+import Performance from './Components/Performance'
+import AddPerformance from './Components/AddPerformance'
+import Leaves from './Components/Leaves'
+import AddLeaves from './Components/AddLeaves'
+import AddAttendance from './Components/AddAttendance'
+import Attendance from './Components/Attendance'
+import Training from './Components/Training'
+import AddTraining from './Components/AddTraining'
+import Benefits from './Components/Benefits'
+import AddBenefits from './Components/AddBenefits'
+import Meetings from './Components/Meetings'
+import AddMeetings from './Components/AddMeetings'
+
 
 function App() {
   return (
@@ -34,9 +47,21 @@ function App() {
         <Route path='/dashboard/employee' element={<Employee />}></Route>
         <Route path='/dashboard/department' element={<Department />}></Route>
         <Route path='/dashboard/payroll' element={<Payroll />}></Route>
+        <Route path='/dashboard/performance' element={<Performance />}></Route>
+        <Route path='/dashboard/leaves' element={<Leaves />}></Route>
+        <Route path='/dashboard/attendance' element={<Attendance />}></Route>
+        <Route path='/dashboard/training' element={<Training />}></Route>
+        <Route path='/dashboard/benefits' element={<Benefits />}></Route>
+        <Route path='/dashboard/meetings' element={<Meetings />}></Route>
         <Route path='/dashboard/profile' element={<Profile />}></Route>
         <Route path='/dashboard/add_department' element={<AddDepartment />}></Route>
         <Route path='/dashboard/add_payroll' element={<AddPayroll />}></Route>
+        <Route path='/dashboard/add_performance' element={<AddPerformance />}></Route>
+        <Route path='/dashboard/add_leaves' element={<AddLeaves />}></Route>
+        <Route path='/dashboard/add_attendance' element={<AddAttendance />}></Route>
+        <Route path='/dashboard/add_training' element={<AddTraining />}></Route>
+        <Route path='/dashboard/add_benefits' element={<AddBenefits />}></Route>
+        <Route path='/dashboard/add_meetings' element={<AddMeetings />}></Route>
         <Route path='/dashboard/add_employee' element={<AddEmployee />}></Route>
         <Route path='/dashboard/edit_employee/:id' element={<EditEmployee />}></Route>
       </Route>
