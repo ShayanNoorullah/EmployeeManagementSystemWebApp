@@ -244,6 +244,60 @@ router.get('/meetings', (req, res) => {
     })
 })
 
+//INITIATE DISCIPLINARY ACTIONS:
+router.post('/add_disciplinaryaction', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO disciplinaryaction
+    (type,dateofaction,reason) 
+    VALUES (?)`;
+    const values = [
+        req.body.type,
+        req.body.dateofaction,
+        req.body.reason
+    ];
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
+router.get('/disciplinaryaction', (req, res) => {
+    const sql = "SELECT * FROM disciplinaryaction";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+
+//MANAGE POSITIONS:
+router.post('/add_position', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO empposition
+    (postitle,description,minsalary,maxsalary,requiredskills) 
+    VALUES (?)`;
+    const values = [
+        req.body.postitle,
+        req.body.description,
+        req.body.minsalary,
+        req.body.maxsalary,
+        req.body.requiredskills
+    ];
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        return res.json({Status: true})
+    })
+})
+
+router.get('/position', (req, res) => {
+    const sql = "SELECT * FROM empposition";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
 
 // image upload 
 const storage = multer.diskStorage({

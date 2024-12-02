@@ -6,7 +6,8 @@ import Dashboard from './Components/Dashboard'
 import Home from './Components/Home'
 import Employee from './Components/Employee'
 import Department from './Components/Department'
-import Profile from './Components/Profile'
+import Position from './Components/Position'
+import AddPosition from './Components/Addposition'
 import AddDepartment from './Components/AddDepartment'
 import AddEmployee from './Components/AddEmployee'
 import EditEmployee from './Components/EditEmployee'
@@ -28,6 +29,9 @@ import Benefits from './Components/Benefits'
 import AddBenefits from './Components/AddBenefits'
 import Meetings from './Components/Meetings'
 import AddMeetings from './Components/AddMeetings'
+import DisciplinaryAction from './Components/DisciplinaryAction'
+import AddDisciplinaryAction from './Components/AddDisciplinaryAction'
+
 
 
 function App() {
@@ -46,6 +50,7 @@ function App() {
         <Route path='' element={<Home />}></Route>
         <Route path='/dashboard/employee' element={<Employee />}></Route>
         <Route path='/dashboard/department' element={<Department />}></Route>
+        <Route path='/dashboard/position' element={<Position />}></Route>
         <Route path='/dashboard/payroll' element={<Payroll />}></Route>
         <Route path='/dashboard/performance' element={<Performance />}></Route>
         <Route path='/dashboard/leaves' element={<Leaves />}></Route>
@@ -53,8 +58,9 @@ function App() {
         <Route path='/dashboard/training' element={<Training />}></Route>
         <Route path='/dashboard/benefits' element={<Benefits />}></Route>
         <Route path='/dashboard/meetings' element={<Meetings />}></Route>
-        <Route path='/dashboard/profile' element={<Profile />}></Route>
+        <Route path='/dashboard/disciplinaryaction' element={<DisciplinaryAction />}></Route>
         <Route path='/dashboard/add_department' element={<AddDepartment />}></Route>
+        <Route path='/dashboard/add_position' element={<AddPosition/>}></Route>
         <Route path='/dashboard/add_payroll' element={<AddPayroll />}></Route>
         <Route path='/dashboard/add_performance' element={<AddPerformance />}></Route>
         <Route path='/dashboard/add_leaves' element={<AddLeaves />}></Route>
@@ -62,6 +68,7 @@ function App() {
         <Route path='/dashboard/add_training' element={<AddTraining />}></Route>
         <Route path='/dashboard/add_benefits' element={<AddBenefits />}></Route>
         <Route path='/dashboard/add_meetings' element={<AddMeetings />}></Route>
+        <Route path='/dashboard/add_disciplinaryaction' element={<AddDisciplinaryAction />}></Route>
         <Route path='/dashboard/add_employee' element={<AddEmployee />}></Route>
         <Route path='/dashboard/edit_employee/:id' element={<EditEmployee />}></Route>
       </Route>

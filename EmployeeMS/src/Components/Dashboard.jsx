@@ -63,11 +63,11 @@ const Dashboard = () => {
               </li>
               <li className="w-100">
                 <Link
-                  to="/dashboard/profile"
+                  to="/dashboard/position"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-person ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Profile</span>
+                  <span className="ms-2 d-none d-sm-inline">Manage Positions</span>
                 </Link>
               </li>
               <li className="w-100">
@@ -131,6 +131,15 @@ const Dashboard = () => {
                 >
                   <i className="fs-4 bi-columns ms-2"></i>
                   <span className="ms-2 d-none d-sm-inline">Manage Meetings</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link
+                  to="/dashboard/disciplinaryaction"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <i className="fs-4 bi-columns ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Disciplinary Actions</span>
                 </Link>
               </li>
               <li className="w-100" onClick={handleLogout}>
