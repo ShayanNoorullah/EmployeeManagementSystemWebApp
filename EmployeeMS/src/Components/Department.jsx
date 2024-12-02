@@ -2,15 +2,15 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-const Category = () => {
+const Department = () => {
 
-    const [category, setCategory] = useState([])
+    const [department, setDepartment] = useState([])
 
     useEffect(()=> {
-        axios.get('http://localhost:3000/auth/category')
+        axios.get('http://localhost:3000/auth/department')
         .then(result => {
             if(result.data.Status) {
-                setCategory(result.data.Result);
+                setDepartment(result.data.Result);
             } else {
                 alert(result.data.Error)
             }
@@ -19,9 +19,9 @@ const Category = () => {
   return (
     <div className='px-5 mt-3'>
         <div className='d-flex justify-content-center'>
-            <h3>Category List</h3>
+            <h3>Department List</h3>
         </div>
-        <Link to="/dashboard/add_category" className='btn btn-success'>Add Category</Link>
+        <Link to="/dashboard/add_department" className='btn btn-success'>Add Department</Link>
         <div className='mt-3'>
             <table className='table'>
                 <thead>
@@ -31,7 +31,7 @@ const Category = () => {
                 </thead>
                 <tbody>
                     {
-                        category.map(c => (
+                        department.map(c => (
                             <tr>
                                 <td>{c.name}</td>
                             </tr>
@@ -45,4 +45,4 @@ const Category = () => {
   )
 }
 
-export default Category
+export default Department

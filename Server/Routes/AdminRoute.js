@@ -26,17 +26,17 @@ router.post("/adminlogin", (req, res) => {
   });
 });
 
-router.get('/category', (req, res) => {
-    const sql = "SELECT * FROM category";
+router.get('/department', (req, res) => {
+    const sql = "SELECT * FROM department";
     con.query(sql, (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
         return res.json({Status: true, Result: result})
     })
 })
 
-router.post('/add_category', (req, res) => {
-    const sql = "INSERT INTO category (`name`) VALUES (?)"
-    con.query(sql, [req.body.category], (err, result) => {
+router.post('/add_department', (req, res) => {
+    const sql = "INSERT INTO department (`name`) VALUES (?)"
+    con.query(sql, [req.body.department], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
         return res.json({Status: true})
     })
@@ -58,7 +58,7 @@ const upload = multer({
 
 router.post('/add_employee',upload.single('image'), (req, res) => {
     const sql = `INSERT INTO employee 
-    (name,email,password, address, salary,image, category_id) 
+    (name,email,password, address, salary,image, department_id) 
     VALUES (?)`;
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
@@ -69,7 +69,7 @@ router.post('/add_employee',upload.single('image'), (req, res) => {
             req.body.address,
             req.body.salary, 
             req.file.filename,
-            req.body.category_id
+            req.body.department_id
         ]
         con.query(sql, [values], (err, result) => {
             if(err) return res.json({Status: false, Error: err})
@@ -98,14 +98,14 @@ router.get('/employee/:id', (req, res) => {
 router.put('/edit_employee/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE employee 
-        set name = ?, email = ?, salary = ?, address = ?, category_id = ? 
+        set name = ?, email = ?, salary = ?, address = ?, department_id = ? 
         Where id = ?`
     const values = [
         req.body.name,
         req.body.email,
         req.body.salary,
         req.body.address,
-        req.body.category_id
+        req.body.department_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})

@@ -9,16 +9,16 @@ const EditEmployee = () => {
         email: "",
         salary: "",
         address: "",
-        category_id: "",
+        department_id: "",
       });
-      const [category, setCategory] = useState([])
+      const [department, setDepartment] = useState([])
       const navigate = useNavigate()
 
       useEffect(()=> {
-        axios.get('http://localhost:3000/auth/category')
+        axios.get('http://localhost:3000/auth/department')
         .then(result => {
             if(result.data.Status) {
-                setCategory(result.data.Result);
+                setDepartment(result.data.Result);
             } else {
                 alert(result.data.Error)
             }
@@ -32,7 +32,7 @@ const EditEmployee = () => {
                 email: result.data.Result[0].email,
                 address: result.data.Result[0].address,
                 salary: result.data.Result[0].salary,
-                category_id: result.data.Result[0].category_id,
+                department_id: result.data.Result[0].department_id,
             })
         }).catch(err => console.log(err))
     }, [])
@@ -118,12 +118,12 @@ const EditEmployee = () => {
             />
           </div>
           <div className="col-12">
-            <label for="category" className="form-label">
-              Category
+            <label for="department" className="form-label">
+              Department
             </label>
-            <select name="category" id="category" className="form-select"
-                onChange={(e) => setEmployee({...employee, category_id: e.target.value})}>
-              {category.map((c) => {
+            <select name="department" id="department" className="form-select"
+                onChange={(e) => setEmployee({...employee, department_id: e.target.value})}>
+              {department.map((c) => {
                 return <option value={c.id}>{c.name}</option>;
               })}
             </select>
