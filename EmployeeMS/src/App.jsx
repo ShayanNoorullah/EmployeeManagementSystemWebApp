@@ -13,6 +13,9 @@ import AddEmployee from './Components/AddEmployee'
 import EditEmployee from './Components/EditEmployee'
 import EditPosition from './Components/EditPosition'
 import EditDepartment from './Components/EditDepartment'
+import EditPayroll from './Components/EditPayroll'
+import EditPerformance from './Components/EditPerformance'
+import EditLeaves from './Components/EditLeaves'
 import Start from './Components/Start'
 import EmployeeLogin from './Components/EmployeeLogin'
 import EmployeeDetail from './Components/EmployeeDetail'
@@ -33,6 +36,14 @@ import Meetings from './Components/Meetings'
 import AddMeetings from './Components/AddMeetings'
 import DisciplinaryAction from './Components/DisciplinaryAction'
 import AddDisciplinaryAction from './Components/AddDisciplinaryAction'
+import EditAttendance from './Components/EditAttendance'
+import EditTraining from './Components/EditTraining'
+import EditBenefits from './Components/EditBenefits'
+import EditMeetings from './Components/EditMeetings'
+import EditDisciplinaryAction from './Components/EditDisciplinaryAction'
+
+
+
 
 
 
@@ -77,6 +88,14 @@ function App() {
         <Route path='/dashboard/edit_employee/:id' element={<EditEmployee />}></Route>
         <Route path='/dashboard/edit_position/:id' element={<EditPosition />} />
         <Route path='/dashboard/edit_department/:id' element={<EditDepartment />} />
+        <Route path='/dashboard/edit_payroll/:id' element={<EditPayroll />} />
+        <Route path='/dashboard/edit_performance/:id' element={<EditPerformance />} />
+        <Route path='/dashboard/edit_leaves/:id' element={<EditLeaves />} />
+        <Route path='/dashboard/edit_attendance/:id' element={<EditAttendance />} />
+        <Route path='/dashboard/edit_training/:id' element={<EditTraining />} />
+        <Route path='/dashboard/edit_benefits/:id' element={<EditBenefits />} />
+        <Route path='/dashboard/edit_meetings/:id' element={<EditMeetings />} />
+        <Route path='/dashboard/edit_disciplinaryaction/:id' element={<EditDisciplinaryAction />} />
       </Route>
     </Routes>
     </BrowserRouter>

@@ -16,6 +16,16 @@ const Attendance = () => {
             }
         }).catch(err => console.log(err))
     }, [])
+    const handleDelete = (id) => {
+        axios.delete('http://localhost:3000/auth/delete_attendance/'+id)
+        .then(result => {
+            if(result.data.Status) {
+                window.location.reload()
+            } else {
+                alert(result.data.Error)
+            }
+        })
+    }
   return (
     <div className='px-5 mt-3'>
         <div className='d-flex justify-content-center'>
@@ -31,6 +41,7 @@ const Attendance = () => {
                         <th>Date</th>
                         <th>Time in</th>
                         <th>Duration</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +51,20 @@ const Attendance = () => {
                                 <td>{c.date}</td>
                                 <td>{c.timein}</td>
                                 <td>{c.duration}</td>
+                                <td>
+                                <Link
+                                to={`/dashboard/edit_attendance/` + c.id}
+                                className="btn btn-info btn-sm me-2"
+                                >
+                                Edit
+                                </Link>
+                                <button
+                                className="btn btn-warning btn-sm"
+                                onClick={() => handleDelete(c.id)}
+                                >
+                                Delete
+                                </button>
+                                </td>
                             </tr>
                         ))
                     }

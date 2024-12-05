@@ -2,33 +2,33 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-const EditBenefits = () => {
+const EditDisciplinaryAction = () => {
     const {id} = useParams()
-    const [benefits, setBenefits] = useState({
+    const [disciplinaryaction, setDisciplinaryAction] = useState({
         type:"",
-        startdate: "",
-        duration:"",
+        dateofaction: "",
+        reason: "",
     }, [])
       const navigate = useNavigate()
 
       useEffect(()=> {
-        axios.get('http://localhost:3000/auth/benefits/'+id)
+        axios.get('http://localhost:3000/auth/disciplinaryaction/'+id)
         .then(result => {
-            setBenefits({
-                ...benefits,
+            setDisciplinaryAction({
+                ...disciplinaryaction,
                 type: result.data.Result[0].type,
-                startdate: result.data.Result[0].startdate,
-                duration: result.data.Result[0].duration
+                dateofaction: result.data.Result[0].dateofaction,
+                reason: result.data.Result[0].reason
             })
         }).catch(err => console.log(err))
     }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put('http://localhost:3000/auth/edit_benefits/'+id, benefits)
+        axios.put('http://localhost:3000/auth/edit_disciplinaryaction/'+id, disciplinaryaction)
         .then(result => {
             if(result.data.Status) {
-                navigate('/dashboard/benefits')
+                navigate('/dashboard/disciplinaryaction')
             } else {
                 alert(result.data.Error)
             }
@@ -38,59 +38,59 @@ const EditBenefits = () => {
   return (
     <div className="d-flex justify-content-center align-items-center mt-3">
       <div className="p-3 rounded w-50 border">
-        <h3 className="text-center">Edit Benefits</h3>
+        <h3 className="text-center">Edit Disciplinary Action</h3>
         <form className="row g-1" onSubmit={handleSubmit}>
         <div className="col-12">
             <label htmlFor="inputType" className="form-label">
-              Type
+              Action Type
             </label>
             <input
               type="text"
               className="form-control rounded-0"
               id="inputType"
-              placeholder="Enter Benefit Type"
+              placeholder="Enter type of action"
               autoComplete="off"
-              value={benefits.type}
+              value={disciplinaryaction.type}
               onChange={(e) =>
-                setBenefits({ ...benefits, type: e.target.value })
+                setDisciplinaryAction({ ...disciplinaryaction, type: e.target.value })
               }
             />
           </div>
           <div className="col-12">
-            <label htmlFor="inputStartdate" className="form-label">
-              Start Date
+            <label htmlFor="inputDateofaction" className="form-label">
+              Date of Action
             </label>
             <input
               type="date"
               className="form-control rounded-0"
-              id="inputStartDate"
-              placeholder="Enter Start Date"
+              id="inputDateofaction"
+              placeholder="Enter Date"
               autoComplete="off"
-              value={benefits.startdate}
+              value={disciplinaryaction.dateofaction}
               onChange={(e) =>
-                setBenefits({ ...benefits, startdate: e.target.value })
+                setDisciplinaryAction({ ...disciplinaryaction, dateofaction: e.target.value })
               }
             />
           </div>
           <div className="col-12">
-            <label htmlFor="inputDuration" className="form-label">
-              Duration
+            <label htmlFor="inputReason" className="form-label">
+              Reason
             </label>
             <input
               type="text"
               className="form-control rounded-0"
-              id="inputDuration"
-              placeholder="Enter Duration"
+              id="inputReason"
+              placeholder="Enter Reason"
               autoComplete="off"
-              value={benefits.duration}
+              value={disciplinaryaction.reason}
               onChange={(e) =>
-                setBenefits({ ...benefits, duration: e.target.value })
+                setDisciplinaryAction({ ...disciplinaryaction, reason: e.target.value })
               }
             />
           </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary w-100">
-              Edit Employee Benefits
+              Edit Disciplinary Action
             </button>
           </div>
         </form>
@@ -99,4 +99,4 @@ const EditBenefits = () => {
   )
 }
 
-export default EditBenefits
+export default EditDisciplinaryAction

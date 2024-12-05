@@ -117,6 +117,43 @@ router.get('/payroll', (req, res) => {
     })
 })
 
+router.get('/payroll/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM payroll WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_payroll/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE payroll
+        set basicsalary = ?, bonus = ?, deduction = ?, netsalary = ?, paydate = ?, payperiod = ?
+        Where id = ?`
+    const values = [
+        req.body.basicsalary,
+        req.body.bonus,
+        req.body.deduction,
+        req.body.netsalary,
+        req.body.paydate,
+        req.body.payperiod
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_payroll/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from payroll where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
 //PERFORMANCE REVIEW:
 router.post('/add_performance', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO performance 
@@ -140,6 +177,41 @@ router.get('/performance', (req, res) => {
     const sql = "SELECT * FROM performance";
     con.query(sql, (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.get('/performance/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM performance WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_performance/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE performance
+        set reviewdate = ?, ratings = ?, feedback = ?, goals = ?
+        Where id = ?`
+    const values = [
+        req.body.reviewdate,
+        req.body.ratings,
+        req.body.feedback,
+        req.body.goals,
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_performance/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from performance where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
     })
 })
@@ -171,6 +243,41 @@ router.get('/leaves', (req, res) => {
     })
 })
 
+router.get('/leaves/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM leaves WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_leaves/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE leaves
+        set type = ?, startdate = ?, enddate = ?, reason = ?
+        Where id = ?`
+    const values = [
+        req.body.type,
+        req.body.startdate,
+        req.body.enddate,
+        req.body.reason,
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_leaves/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from leaves where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
 //MARK ATTENDANCE:
 router.post('/add_attendance', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO attendance
@@ -193,6 +300,40 @@ router.get('/attendance', (req, res) => {
     const sql = "SELECT * FROM attendance";
     con.query(sql, (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.get('/attendance/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM attendance WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_attendance/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE attendance
+        set date = ?, timein = ?, duration = ?
+        Where id = ?`
+    const values = [
+        req.body.date,
+        req.body.timein,
+        req.body.duration
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_attendance/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from attendance where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
     })
 })
@@ -224,6 +365,42 @@ router.get('/training', (req, res) => {
     })
 })
 
+router.get('/training/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM training WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_training/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE training
+        set name = ?, description = ?, startdate = ?, duration = ?
+        Where id = ?`
+    const values = [
+        req.body.name,
+        req.body.description,
+        req.body.startdate,
+        req.body.duration
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_training/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from training where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+
 //ADD EMPLOYEE BENEFITS:
 router.post('/add_benefits', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO benefits
@@ -246,6 +423,40 @@ router.get('/benefits', (req, res) => {
     const sql = "SELECT * FROM benefits";
     con.query(sql, (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.get('/benefits/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM benefits WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_benefits/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE training
+        set type = ?, startdate = ?, duration = ?
+        Where id = ?`
+    const values = [
+        req.body.type,
+        req.body.startdate,
+        req.body.duration,
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_benefits/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from benefits where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
     })
 })
@@ -280,6 +491,44 @@ router.get('/meetings', (req, res) => {
     })
 })
 
+router.get('/meetings/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM meetings WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_meetings/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE meetings
+        set title = ?, description = ?, date = ?, starttime = ?, duration=?, location = ?, agenda = ?
+        Where id = ?`
+    const values = [
+        req.body.title,
+        req.body.description,
+        req.body.date,
+        req.body.starttime,
+        req.body.duration,
+        req.body.location,
+        req.body.agenda
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_meetings/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from meetings where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
 //INITIATE DISCIPLINARY ACTIONS:
 router.post('/add_disciplinaryaction', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO disciplinaryaction
@@ -302,6 +551,40 @@ router.get('/disciplinaryaction', (req, res) => {
     const sql = "SELECT * FROM disciplinaryaction";
     con.query(sql, (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.get('/disciplinaryaction/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM disciplinaryaction WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_disciplinaryaction/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE disciplinaryaction
+        set type = ?, dateofaction = ?, reason = ?
+        Where id = ?`
+    const values = [
+        req.body.type,
+        req.body.dateofaction,
+        req.body.reason,
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_disciplinaryaction/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from disciplinaryaction where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
         return res.json({Status: true, Result: result})
     })
 })

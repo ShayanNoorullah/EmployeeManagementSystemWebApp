@@ -16,6 +16,16 @@ const Benefits = () => {
             }
         }).catch(err => console.log(err))
     }, [])
+    const handleDelete = (id) => {
+        axios.delete('http://localhost:3000/auth/delete_benefits/'+id)
+        .then(result => {
+            if(result.data.Status) {
+                window.location.reload()
+            } else {
+                alert(result.data.Error)
+            }
+        })
+    }
   return (
     <div className='px-5 mt-3'>
         <div className='d-flex justify-content-center'>
@@ -31,6 +41,7 @@ const Benefits = () => {
                         <th>Benefit Type</th>
                         <th>Start Date</th>
                         <th>Duration</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +51,20 @@ const Benefits = () => {
                                 <td>{c.type}</td>
                                 <td>{c.startdate}</td>
                                 <td>{c.duration}</td>
+                                <td>
+                                <Link
+                                to={`/dashboard/edit_benefits/` + c.id}
+                                className="btn btn-info btn-sm me-2"
+                                >
+                                Edit
+                                </Link>
+                                <button
+                                className="btn btn-warning btn-sm"
+                                onClick={() => handleDelete(c.id)}
+                                >
+                                Delete
+                                </button>
+                                </td>
                             </tr>
                         ))
                     }

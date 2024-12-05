@@ -2,33 +2,35 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
-const EditBenefits = () => {
+const EditLeaves = () => {
     const {id} = useParams()
-    const [benefits, setBenefits] = useState({
+    const [leaves, setLeaves] = useState({
         type:"",
-        startdate: "",
-        duration:"",
+        startdate:"",
+        enddate:"",
+        reason:"",
     }, [])
       const navigate = useNavigate()
 
       useEffect(()=> {
-        axios.get('http://localhost:3000/auth/benefits/'+id)
+        axios.get('http://localhost:3000/auth/leaves/'+id)
         .then(result => {
-            setBenefits({
-                ...benefits,
+            setLeaves({
+                ...leaves,
                 type: result.data.Result[0].type,
                 startdate: result.data.Result[0].startdate,
-                duration: result.data.Result[0].duration
+                enddate: result.data.Result[0].enddate,
+                reason: result.data.Result[0].reason
             })
         }).catch(err => console.log(err))
     }, [])
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axios.put('http://localhost:3000/auth/edit_benefits/'+id, benefits)
+        axios.put('http://localhost:3000/auth/edit_leaves/'+id, leaves)
         .then(result => {
             if(result.data.Status) {
-                navigate('/dashboard/benefits')
+                navigate('/dashboard/leaves')
             } else {
                 alert(result.data.Error)
             }
@@ -38,21 +40,21 @@ const EditBenefits = () => {
   return (
     <div className="d-flex justify-content-center align-items-center mt-3">
       <div className="p-3 rounded w-50 border">
-        <h3 className="text-center">Edit Benefits</h3>
+        <h3 className="text-center">Edit Leaves</h3>
         <form className="row g-1" onSubmit={handleSubmit}>
         <div className="col-12">
             <label htmlFor="inputType" className="form-label">
-              Type
+              Leave Type
             </label>
             <input
               type="text"
               className="form-control rounded-0"
-              id="inputType"
-              placeholder="Enter Benefit Type"
+              id="inputLeaveType"
+              placeholder="Enter Leave Type"
               autoComplete="off"
-              value={benefits.type}
+              value={leaves.type}
               onChange={(e) =>
-                setBenefits({ ...benefits, type: e.target.value })
+                setLeaves({ ...leaves, type: e.target.value })
               }
             />
           </div>
@@ -63,34 +65,50 @@ const EditBenefits = () => {
             <input
               type="date"
               className="form-control rounded-0"
-              id="inputStartDate"
+              id="inputStartdate"
               placeholder="Enter Start Date"
               autoComplete="off"
-              value={benefits.startdate}
+              value={leaves.startdate}
               onChange={(e) =>
-                setBenefits({ ...benefits, startdate: e.target.value })
+                setLeaves({ ...leaves, startdate: e.target.value })
               }
             />
           </div>
           <div className="col-12">
-            <label htmlFor="inputDuration" className="form-label">
-              Duration
+            <label htmlFor="inputEnddate" className="form-label">
+              End Date
+            </label>
+            <input
+              type="date"
+              className="form-control rounded-0"
+              id="inputEnddate"
+              placeholder="Enter End Date"
+              autoComplete="off"
+              value={leaves.enddate}
+              onChange={(e) =>
+                setLeaves({ ...leaves, enddate: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-12">
+            <label htmlFor="inputReason" className="form-label">
+              Reason
             </label>
             <input
               type="text"
               className="form-control rounded-0"
-              id="inputDuration"
-              placeholder="Enter Duration"
+              id="inputReason"
+              placeholder="Enter Reason"
               autoComplete="off"
-              value={benefits.duration}
+              value={leaves.reason}
               onChange={(e) =>
-                setBenefits({ ...benefits, duration: e.target.value })
+                setLeaves({ ...leaves, reason: e.target.value })
               }
             />
           </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary w-100">
-              Edit Employee Benefits
+              Edit Leave Request
             </button>
           </div>
         </form>
@@ -99,4 +117,4 @@ const EditBenefits = () => {
   )
 }
 
-export default EditBenefits
+export default EditLeaves
