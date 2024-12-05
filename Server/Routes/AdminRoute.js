@@ -52,6 +52,42 @@ router.get('/department', (req, res) => {
     })
 })
 
+router.get('/department/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM department WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+//MANAGE DEPARTMENT RECORDS:
+
+router.put('/edit_department/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE department
+        set name = ?, location = ?, numberofemployees = ? 
+        Where id = ?`
+    const values = [
+        req.body.name,
+        req.body.location,
+        req.body.numberofemployees,
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_department/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from department where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
 //PAYROLL:
 router.post('/add_payroll', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO payroll 
@@ -299,6 +335,44 @@ router.get('/position', (req, res) => {
     })
 })
 
+router.get('/position/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM empposition WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+//MANAGE POSITION RECORDS:
+
+router.put('/edit_position/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE empposition 
+        set postitle = ?, description = ?, minsalary = ?, maxsalary = ?, requiredskills = ? 
+        Where id = ?`
+    const values = [
+        req.body.postitle,
+        req.body.description,
+        req.body.minsalary,
+        req.body.maxsalary,
+        req.body.requiredskills
+    ]
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.delete('/delete_position/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from empposition where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
 // image upload 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -312,6 +386,9 @@ const upload = multer({
     storage: storage
 })
 // end imag eupload 
+
+
+//MANAGE EMPLOYEE
 
 router.post('/add_employee',upload.single('image'), (req, res) => {
     const sql = `INSERT INTO employee 
@@ -379,6 +456,9 @@ router.delete('/delete_employee/:id', (req, res) => {
     })
 })
 
+
+//MANAGE ADMIN DETAILS
+
 router.get('/admin_count', (req, res) => {
     const sql = "select count(id) as admin from admin";
     con.query(sql, (err, result) => {
@@ -386,6 +466,8 @@ router.get('/admin_count', (req, res) => {
         return res.json({Status: true, Result: result})
     })
 })
+
+//MANAGE EMPLOYEE DETAILS
 
 router.get('/employee_count', (req, res) => {
     const sql = "select count(id) as employee from employee";
@@ -395,6 +477,8 @@ router.get('/employee_count', (req, res) => {
     })
 })
 
+//MANAGE SALARY DETAILS
+
 router.get('/salary_count', (req, res) => {
     const sql = "select sum(salary) as salaryOFEmp from employee";
     con.query(sql, (err, result) => {
@@ -403,6 +487,8 @@ router.get('/salary_count', (req, res) => {
     })
 })
 
+//LIST ADMIN RECORDS
+
 router.get('/admin_records', (req, res) => {
     const sql = "select * from admin"
     con.query(sql, (err, result) => {
@@ -410,6 +496,8 @@ router.get('/admin_records', (req, res) => {
         return res.json({Status: true, Result: result})
     })
 })
+
+//LOGOUT FROM THE WEB APPLICATION
 
 router.get('/logout', (req, res) => {
     res.clearCookie('token')

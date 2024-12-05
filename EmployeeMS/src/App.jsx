@@ -11,6 +11,8 @@ import AddPosition from './Components/Addposition'
 import AddDepartment from './Components/AddDepartment'
 import AddEmployee from './Components/AddEmployee'
 import EditEmployee from './Components/EditEmployee'
+import EditPosition from './Components/EditPosition'
+import EditDepartment from './Components/EditDepartment'
 import Start from './Components/Start'
 import EmployeeLogin from './Components/EmployeeLogin'
 import EmployeeDetail from './Components/EmployeeDetail'
@@ -31,6 +33,8 @@ import Meetings from './Components/Meetings'
 import AddMeetings from './Components/AddMeetings'
 import DisciplinaryAction from './Components/DisciplinaryAction'
 import AddDisciplinaryAction from './Components/AddDisciplinaryAction'
+
+
 
 
 
@@ -71,6 +75,8 @@ function App() {
         <Route path='/dashboard/add_disciplinaryaction' element={<AddDisciplinaryAction />}></Route>
         <Route path='/dashboard/add_employee' element={<AddEmployee />}></Route>
         <Route path='/dashboard/edit_employee/:id' element={<EditEmployee />}></Route>
+        <Route path='/dashboard/edit_position/:id' element={<EditPosition />} />
+        <Route path='/dashboard/edit_department/:id' element={<EditDepartment />} />
       </Route>
     </Routes>
     </BrowserRouter>
