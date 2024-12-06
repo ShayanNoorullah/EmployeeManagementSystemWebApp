@@ -34,18 +34,19 @@ import Benefits from './Components/Benefits'
 import AddBenefits from './Components/AddBenefits'
 import Meetings from './Components/Meetings'
 import AddMeetings from './Components/AddMeetings'
+import AddProject from './Components/AddProject'
 import DisciplinaryAction from './Components/DisciplinaryAction'
 import AddDisciplinaryAction from './Components/AddDisciplinaryAction'
 import EditAttendance from './Components/EditAttendance'
 import EditTraining from './Components/EditTraining'
 import EditBenefits from './Components/EditBenefits'
 import EditMeetings from './Components/EditMeetings'
+import EditProject from './Components/EditProject'
 import EditDisciplinaryAction from './Components/EditDisciplinaryAction'
-
-
-
-
-
+import Project from './Components/Project'
+import Task from './Components/Task'
+import AddTask from './Components/AddTask'
+import EditTask from './Components/EditTask'
 
 
 
@@ -74,6 +75,8 @@ function App() {
         <Route path='/dashboard/benefits' element={<Benefits />}></Route>
         <Route path='/dashboard/meetings' element={<Meetings />}></Route>
         <Route path='/dashboard/disciplinaryaction' element={<DisciplinaryAction />}></Route>
+        <Route path='/dashboard/project' element={<Project/>}></Route>
+        <Route path='/dashboard/task' element={<Task/>}></Route>
         <Route path='/dashboard/add_department' element={<AddDepartment />}></Route>
         <Route path='/dashboard/add_position' element={<AddPosition/>}></Route>
         <Route path='/dashboard/add_payroll' element={<AddPayroll />}></Route>
@@ -84,6 +87,8 @@ function App() {
         <Route path='/dashboard/add_benefits' element={<AddBenefits />}></Route>
         <Route path='/dashboard/add_meetings' element={<AddMeetings />}></Route>
         <Route path='/dashboard/add_disciplinaryaction' element={<AddDisciplinaryAction />}></Route>
+        <Route path='/dashboard/add_project' element={<AddProject />}></Route>
+        <Route path='/dashboard/add_task' element={<AddTask />}></Route>
         <Route path='/dashboard/add_employee' element={<AddEmployee />}></Route>
         <Route path='/dashboard/edit_employee/:id' element={<EditEmployee />}></Route>
         <Route path='/dashboard/edit_position/:id' element={<EditPosition />} />
@@ -96,6 +101,8 @@ function App() {
         <Route path='/dashboard/edit_benefits/:id' element={<EditBenefits />} />
         <Route path='/dashboard/edit_meetings/:id' element={<EditMeetings />} />
         <Route path='/dashboard/edit_disciplinaryaction/:id' element={<EditDisciplinaryAction />} />
+        <Route path='/dashboard/edit_project/:id' element={<EditProject />} />
+        <Route path='/dashboard/edit_task/:id' element={<EditTask />} />
       </Route>
     </Routes>
     </BrowserRouter>

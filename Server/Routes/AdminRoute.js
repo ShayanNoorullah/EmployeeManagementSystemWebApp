@@ -96,7 +96,7 @@ router.post('/add_payroll', express.urlencoded({ extended: true }),  (req, res) 
         req.body.basicsalary,
         req.body.bonus,
         req.body.deduction,
-        req.body.netsalary,
+        (req.body.basicsalary + req.body.bonus - req.body.deduction),
         req.body.paydate,
         req.body.payperiod,
         req.body.emp_id
@@ -135,7 +135,7 @@ router.put('/edit_payroll/:id', (req, res) => {
         req.body.basicsalary,
         req.body.bonus,
         req.body.deduction,
-        req.body.netsalary,
+        (req.body.basicsalary + req.body.bonus - req.body.deduction),
         req.body.paydate,
         req.body.payperiod,
         req.body.emp_id
@@ -641,8 +641,6 @@ router.get('/position/:id', (req, res) => {
     })
 })
 
-//MANAGE POSITION RECORDS:
-
 router.put('/edit_position/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE empposition 
@@ -670,6 +668,140 @@ router.delete('/delete_position/:id', (req, res) => {
         return res.json({Status: true, Result: result})
     })
 })
+
+//Manage PROJECTS
+
+router.post('/add_project', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO project 
+    (p_name,description,startdate,enddate) 
+    VALUES (?)`;
+    const values = [
+        req.body.p_name,
+        req.body.description,
+        req.body.startdate,
+        req.body.enddate
+    ];
+    console.log(req.body);
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        console.log(result);
+        return res.json({Status: true})
+    })
+})
+
+router.get('/project', (req, res) => {
+    const sql = "SELECT * FROM project";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.get('/project/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM project WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_project/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE project
+        SET p_name=?, description=?, startdate=?, enddate=? 
+        WHERE id = ?`;
+    const values = [
+        req.body.p_name,
+        req.body.description,
+        req.body.startdate,
+        req.body.enddate
+    ];
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+});
+router.delete('/delete_project/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from  project where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+//TASK:
+
+
+router.post('/add_task', express.urlencoded({ extended: true }),  (req, res) => {
+    const sql =`INSERT INTO task 
+    (name,description,duedate,status,project_id,employee_id) 
+    VALUES (?)`;
+    const values = [
+        req.body.name,
+        req.body.description,
+        req.body.duedate,
+        req.body.status,
+        req.body.project_id,
+        req.body.employee_id
+    ];
+    console.log(req.body);
+    con.query(sql, [values], (err, result) => {
+        if(err){
+            console.error("SQL Error:", err);
+            return res.json({Status: false, Error: "Query Error"})}
+        console.log(result);
+        return res.json({Status: true})
+    })
+})
+
+router.get('/task', (req, res) => {
+    const sql = "SELECT * FROM task";
+    con.query(sql, (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.get('/task/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "SELECT * FROM task WHERE id = ?";
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"})
+        return res.json({Status: true, Result: result})
+    })
+})
+
+router.put('/edit_task/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = `UPDATE task
+        SET name=?, description=?, duedate=?, status=?, project_id=?, employee_id=? 
+        WHERE id = ?`;
+    const values = [
+        req.body.name,
+        req.body.description,
+        req.body.duedate,
+        req.body.status,
+        req.body.project_id,
+        req.body.employee_id
+    ];
+    con.query(sql,[...values, id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+});
+router.delete('/delete_task/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = "delete from task where id = ?"
+    con.query(sql,[id], (err, result) => {
+        if(err) return res.json({Status: false, Error: "Query Error"+err})
+        return res.json({Status: true, Result: result})
+    })
+})
+
 
 
 // MANAGE EMPLOYEES

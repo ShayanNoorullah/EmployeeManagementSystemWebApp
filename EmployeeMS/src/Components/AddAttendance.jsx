@@ -102,8 +102,10 @@ const AddAttendance = () => {
               className="form-select"
               onChange={(e) =>
                 setAttendance({ ...attendance, emp_id: e.target.value })
+                
               }
             >
+              <option value="">Select Employee</option>
               {employee.map((c) => {
                 return <option value={c.id}>{c.name}</option>;
               })}

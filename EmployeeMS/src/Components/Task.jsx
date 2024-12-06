@@ -1,23 +1,23 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate  } from 'react-router-dom'
 
-const Payroll = () => {
+const Task = () => {
 
-    const [payroll, setPayroll] = useState([])
-
+    const [task, setTask] = useState([])
+    const navigate = useNavigate()
     useEffect(()=> {
-        axios.get('http://localhost:3000/auth/payroll')
+        axios.get('http://localhost:3000/auth/task')
         .then(result => {
             if(result.data.Status) {
-                setPayroll(result.data.Result);
+                setTask(result.data.Result);
             } else {
                 alert(result.data.Error)
             }
         }).catch(err => console.log(err))
     }, [])
     const handleDelete = (id) => {
-        axios.delete('http://localhost:3000/auth/delete_payroll/'+id)
+        axios.delete('http://localhost:3000/auth/delete_task/'+id)
         .then(result => {
             if(result.data.Status) {
                 window.location.reload()
@@ -29,39 +29,33 @@ const Payroll = () => {
   return (
     <div className='px-5 mt-3'>
         <div className='d-flex justify-content-center'>
-            <h3>Payroll List</h3>
+            <h3>Task List</h3>
         </div>
-        <Link to="/dashboard/add_payroll" className='btn btn-success'>
-        Add Payroll
+        <Link to="/dashboard/add_task" className='btn btn-success'>
+        Add Task
         </Link>
         <div className='mt-3'>
             <table className='table'>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Basic Salary</th>
-                        <th>Bonus</th>
-                        <th>Deduction</th>
-                        <th>Net Salary</th>
-                        <th>Pay Date</th>
-                        <th>Pay Period</th>
-                        <th>Action</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Due_date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        payroll.map(c => (
+                        task.map(c => (
                             <tr>
-                                <td>{c.emp_id}</td>
-                                <td>{c.basicsalary}</td>
-                                <td>{c.bonus}</td>
-                                <td>{c.deduction}</td>
-                                <td>{c.netsalary}</td>
-                                <td>{c.paydate}</td>
-                                <td>{c.payperiod}</td>
+                                <td>{c.name}</td>
+                                <td>{c.description}</td>
+                                <td>{c.duedate}</td>
+                                <td>{c.status}</td>
                                 <td>
                                 <Link
-                                to={`/dashboard/edit_payroll/` + c.id}
+                                to={`/dashboard/edit_task/` + c.id}
                                 className="btn btn-info btn-sm me-2"
                                 >
                                 Edit
@@ -84,4 +78,4 @@ const Payroll = () => {
   )
 }
 
-export default Payroll
+export default Task

@@ -38,6 +38,7 @@ const Attendance = () => {
             <table className='table'>
                 <thead>
                     <tr>
+                        <th>ID</th>
                         <th>Date</th>
                         <th>Time in</th>
                         <th>Duration</th>
@@ -48,6 +49,7 @@ const Attendance = () => {
                     {
                         attendance.map(c => (
                             <tr>
+                                <td>{c.emp_id}</td> 
                                 <td>{c.date}</td>
                                 <td>{c.timein}</td>
                                 <td>{c.duration}</td>

@@ -177,6 +177,7 @@ const AddEmployee = () => {
                 setEmployee({ ...employee, department_id: e.target.value })
               }
             >
+              <option value="">Select Department</option>
               {department.map((c) => {
                 return <option value={c.id}>{c.name}</option>;
               })}
@@ -194,6 +195,7 @@ const AddEmployee = () => {
                 setEmployee({ ...employee, meeting_id: e.target.value })
               }
             >
+              <option value="">Select Meeting</option>
               {meetings.map((c) => {
                 return <option value={c.id}>{c.title}</option>;
               })}
@@ -211,6 +213,7 @@ const AddEmployee = () => {
                 setEmployee({ ...employee, position_id: e.target.value })
               }
             >
+              <option value="">Select Position</option>
               {position.map((c) => {
                 return <option value={c.id}>{c.postitle}</option>;
               })}

@@ -57,8 +57,8 @@ const Dashboard = () => {
                   to="/dashboard/department"
                   className="nav-link px-0 align-middle text-white"
                 >
-                  <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Department</span>
+                  <i className="fs-4 bi-person ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Manage Departments</span>
                 </Link>
               </li>
               <li className="w-100">
@@ -72,11 +72,47 @@ const Dashboard = () => {
               </li>
               <li className="w-100">
                 <Link
-                  to="/dashboard/payroll"
+                  to="/dashboard/project"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <i className="fs-4 bi-person ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Manage Projects</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link
+                  to="/dashboard/task"
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Payroll</span>
+                  <span className="ms-2 d-none d-sm-inline">Assign Task</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link
+                  to="/dashboard/attendance"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <i className="fs-4 bi-person ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Manage Attendance</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link
+                  to="/dashboard/meetings"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <i className="fs-4 bi-person ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Manage Meetings</span>
+                </Link>
+              </li>
+              <li className="w-100">
+                <Link
+                  to="/dashboard/payroll"
+                  className="nav-link px-0 align-middle text-white"
+                >
+                  <i className="fs-4 bi-person ms-2"></i>
+                  <span className="ms-2 d-none d-sm-inline">Manage Payroll</span>
                 </Link>
               </li>
               <li className="w-100">
@@ -85,7 +121,7 @@ const Dashboard = () => {
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Performance</span>
+                  <span className="ms-2 d-none d-sm-inline">Review Performance</span>
                 </Link>
               </li>
               <li className="w-100">
@@ -94,16 +130,7 @@ const Dashboard = () => {
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Leaves</span>
-                </Link>
-              </li>
-              <li className="w-100">
-                <Link
-                  to="/dashboard/attendance"
-                  className="nav-link px-0 align-middle text-white"
-                >
-                  <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Attendance</span>
+                  <span className="ms-2 d-none d-sm-inline">Review Leaves</span>
                 </Link>
               </li>
               <li className="w-100">
@@ -112,7 +139,7 @@ const Dashboard = () => {
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Training</span>
+                  <span className="ms-2 d-none d-sm-inline">Review Training</span>
                 </Link>
               </li>
               <li className="w-100">
@@ -121,18 +148,10 @@ const Dashboard = () => {
                   className="nav-link px-0 align-middle text-white"
                 >
                   <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Benefit</span>
+                  <span className="ms-2 d-none d-sm-inline">Review Benefits</span>
                 </Link>
               </li>
-              <li className="w-100">
-                <Link
-                  to="/dashboard/meetings"
-                  className="nav-link px-0 align-middle text-white"
-                >
-                  <i className="fs-4 bi-columns ms-2"></i>
-                  <span className="ms-2 d-none d-sm-inline">Manage Meetings</span>
-                </Link>
-              </li>
+
               <li className="w-100">
                 <Link
                   to="/dashboard/disciplinaryaction"
