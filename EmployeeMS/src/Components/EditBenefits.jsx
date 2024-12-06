@@ -8,8 +8,23 @@ const EditBenefits = () => {
         type:"",
         startdate: "",
         duration:"",
+        emp_id:""
     }, [])
       const navigate = useNavigate()
+
+      const [employee, setEmployee] = useState([]);
+      useEffect(() => {
+        axios
+          .get("http://localhost:3000/auth/employee")
+          .then((result) => {
+            if (result.data.Status) {
+              setEmployee(result.data.Result);
+            } else {
+              alert(result.data.Error);
+            }
+          })
+          .catch((err) => console.log(err));
+      }, []);
 
       useEffect(()=> {
         axios.get('http://localhost:3000/auth/benefits/'+id)
@@ -18,7 +33,8 @@ const EditBenefits = () => {
                 ...benefits,
                 type: result.data.Result[0].type,
                 startdate: result.data.Result[0].startdate,
-                duration: result.data.Result[0].duration
+                duration: result.data.Result[0].duration,
+                emp_id: result.data.Result[0].emp_id
             })
         }).catch(err => console.log(err))
     }, [])
@@ -87,6 +103,23 @@ const EditBenefits = () => {
                 setBenefits({ ...benefits, duration: e.target.value })
               }
             />
+          </div>
+          <div className="col-12">
+            <label htmlFor="employee" className="form-label">
+              Employee
+            </label>
+            <select
+              name="employee"
+              id="employee"
+              className="form-select"
+              onChange={(e) =>
+                setBenefits({ ...benefits, emp_id: e.target.value })
+              }
+            >
+              {employee.map((c) => {
+                return <option value={c.id}>{c.name}</option>;
+              })}
+            </select>
           </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary w-100">

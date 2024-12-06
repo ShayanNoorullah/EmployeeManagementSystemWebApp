@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const AddLeaves = () => {
@@ -8,9 +8,26 @@ const AddLeaves = () => {
         startdate:"",
         enddate:"",
         reason:"",
+        emp_id:""
     }, [])
 
     const navigate = useNavigate()
+
+    const [employee, setEmployee] = useState([]);
+    useEffect(() => {
+      axios
+        .get("http://localhost:3000/auth/employee")
+        .then((result) => {
+          if (result.data.Status) {
+            setEmployee(result.data.Result);
+          } else {
+            alert(result.data.Error);
+          }
+        })
+        .catch((err) => console.log(err));
+    }, []);
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
         
@@ -19,6 +36,7 @@ const AddLeaves = () => {
             startdate: leaves.startdate,
             enddate: leaves.enddate,
             reason: leaves.reason,
+            emp_id: leaves.emp_id
         })
         .then(result => {
             if(result.data.Status) {
@@ -89,6 +107,23 @@ const AddLeaves = () => {
                 setLeaves({ ...leaves, reason: e.target.value })
               }
             />
+          </div>
+          <div className="col-12">
+            <label htmlFor="employee" className="form-label">
+              Employee
+            </label>
+            <select
+              name="employee"
+              id="employee"
+              className="form-select"
+              onChange={(e) =>
+                setLeaves({ ...leaves, emp_id: e.target.value })
+              }
+            >
+              {employee.map((c) => {
+                return <option value={c.id}>{c.name}</option>;
+              })}
+            </select>
           </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary w-100">

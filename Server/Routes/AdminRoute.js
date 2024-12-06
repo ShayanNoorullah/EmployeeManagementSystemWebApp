@@ -7,6 +7,7 @@ import path from "path";
 import sql from 'mysql';
 const router = express.Router();
 
+//LOGGIN IN AS ADMIN:
 router.post("/adminlogin", (req, res) => {
   const sql = "SELECT * from admin Where email = ? and password = ?";
   con.query(sql, [req.body.email, req.body.password], (err, result) => {
@@ -61,8 +62,6 @@ router.get('/department/:id', (req, res) => {
     })
 })
 
-//MANAGE DEPARTMENT RECORDS:
-
 router.put('/edit_department/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE department
@@ -91,7 +90,7 @@ router.delete('/delete_department/:id', (req, res) => {
 //PAYROLL:
 router.post('/add_payroll', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO payroll 
-    (basicsalary,bonus,deduction,netsalary,paydate,payperiod) 
+    (basicsalary,bonus,deduction,netsalary,paydate,payperiod, emp_id) 
     VALUES (?)`;
     const values = [
         req.body.basicsalary,
@@ -99,7 +98,8 @@ router.post('/add_payroll', express.urlencoded({ extended: true }),  (req, res) 
         req.body.deduction,
         req.body.netsalary,
         req.body.paydate,
-        req.body.payperiod
+        req.body.payperiod,
+        req.body.emp_id
     ];
     con.query(sql, [values], (err, result) => {
         if(err){
@@ -129,7 +129,7 @@ router.get('/payroll/:id', (req, res) => {
 router.put('/edit_payroll/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE payroll
-        set basicsalary = ?, bonus = ?, deduction = ?, netsalary = ?, paydate = ?, payperiod = ?
+        set basicsalary = ?, bonus = ?, deduction = ?, netsalary = ?, paydate = ?, payperiod = ?, emp_id = ?
         Where id = ?`
     const values = [
         req.body.basicsalary,
@@ -137,7 +137,8 @@ router.put('/edit_payroll/:id', (req, res) => {
         req.body.deduction,
         req.body.netsalary,
         req.body.paydate,
-        req.body.payperiod
+        req.body.payperiod,
+        req.body.emp_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
@@ -157,13 +158,14 @@ router.delete('/delete_payroll/:id', (req, res) => {
 //PERFORMANCE REVIEW:
 router.post('/add_performance', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO performance 
-    (reviewdate,ratings,feedback,goals) 
+    (reviewdate,ratings,feedback,goals, emp_id) 
     VALUES (?)`;
     const values = [
         req.body.reviewdate,
         req.body.ratings,
         req.body.feedback,
         req.body.goals,
+        req.body.emp_id
     ];
     con.query(sql, [values], (err, result) => {
         if(err){
@@ -193,13 +195,14 @@ router.get('/performance/:id', (req, res) => {
 router.put('/edit_performance/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE performance
-        set reviewdate = ?, ratings = ?, feedback = ?, goals = ?
+        set reviewdate = ?, ratings = ?, feedback = ?, goals = ?, emp_id = ?
         Where id = ?`
     const values = [
         req.body.reviewdate,
         req.body.ratings,
         req.body.feedback,
         req.body.goals,
+        req.body.emp_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
@@ -219,13 +222,14 @@ router.delete('/delete_performance/:id', (req, res) => {
 //LEAVE REQUEST:
 router.post('/add_leaves', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO leaves
-    (type,startdate,enddate,reason) 
+    (type,startdate,enddate,reason, emp_id) 
     VALUES (?)`;
     const values = [
         req.body.type,
         req.body.startdate,
         req.body.enddate,
         req.body.reason,
+        req.body.emp_id
     ];
     con.query(sql, [values], (err, result) => {
         if(err){
@@ -255,13 +259,14 @@ router.get('/leaves/:id', (req, res) => {
 router.put('/edit_leaves/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE leaves
-        set type = ?, startdate = ?, enddate = ?, reason = ?
+        set type = ?, startdate = ?, enddate = ?, reason = ?, emp_id = ?
         Where id = ?`
     const values = [
         req.body.type,
         req.body.startdate,
         req.body.enddate,
         req.body.reason,
+        req.body.emp_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
@@ -281,12 +286,13 @@ router.delete('/delete_leaves/:id', (req, res) => {
 //MARK ATTENDANCE:
 router.post('/add_attendance', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO attendance
-    (date,timein,duration) 
+    (date,timein,duration, emp_id) 
     VALUES (?)`;
     const values = [
         req.body.date,
         req.body.timein,
         req.body.duration,
+        req.body.emp_id
     ];
     con.query(sql, [values], (err, result) => {
         if(err){
@@ -316,12 +322,13 @@ router.get('/attendance/:id', (req, res) => {
 router.put('/edit_attendance/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE attendance
-        set date = ?, timein = ?, duration = ?
+        set date = ?, timein = ?, duration = ?, emp_id = ?
         Where id = ?`
     const values = [
         req.body.date,
         req.body.timein,
-        req.body.duration
+        req.body.duration,
+        req.body.emp_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
@@ -341,13 +348,14 @@ router.delete('/delete_attendance/:id', (req, res) => {
 //ADD TRAINING DETAILS:
 router.post('/add_training', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO training
-    (name,description,startdate,duration) 
+    (name,description,startdate,duration,emp_id) 
     VALUES (?)`;
     const values = [
         req.body.name,
         req.body.description,
         req.body.startdate,
-        req.body.duration
+        req.body.duration,
+        req.body.emp_id
     ];
     con.query(sql, [values], (err, result) => {
         if(err){
@@ -377,13 +385,14 @@ router.get('/training/:id', (req, res) => {
 router.put('/edit_training/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE training
-        set name = ?, description = ?, startdate = ?, duration = ?
+        set name = ?, description = ?, startdate = ?, duration = ?, emp_id = ?,
         Where id = ?`
     const values = [
         req.body.name,
         req.body.description,
         req.body.startdate,
-        req.body.duration
+        req.body.duration,
+        req.body.emp_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
@@ -404,12 +413,13 @@ router.delete('/delete_training/:id', (req, res) => {
 //ADD EMPLOYEE BENEFITS:
 router.post('/add_benefits', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO benefits
-    (type,startdate,duration) 
+    (type,startdate,duration,emp_id ) 
     VALUES (?)`;
     const values = [
         req.body.type,
         req.body.startdate,
-        req.body.duration
+        req.body.duration,
+        req.body.emp_id
     ];
     con.query(sql, [values], (err, result) => {
         if(err){
@@ -439,12 +449,13 @@ router.get('/benefits/:id', (req, res) => {
 router.put('/edit_benefits/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE training
-        set type = ?, startdate = ?, duration = ?
+        set type = ?, startdate = ?, duration = ?, emp_id = ?
         Where id = ?`
     const values = [
         req.body.type,
         req.body.startdate,
         req.body.duration,
+        req.body.emp_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
@@ -532,12 +543,13 @@ router.delete('/delete_meetings/:id', (req, res) => {
 //INITIATE DISCIPLINARY ACTIONS:
 router.post('/add_disciplinaryaction', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO disciplinaryaction
-    (type,dateofaction,reason) 
+    (type,dateofaction,reason, emp_id) 
     VALUES (?)`;
     const values = [
         req.body.type,
         req.body.dateofaction,
-        req.body.reason
+        req.body.reason,
+        req.body.emp_id
     ];
     con.query(sql, [values], (err, result) => {
         if(err){
@@ -567,12 +579,13 @@ router.get('/disciplinaryaction/:id', (req, res) => {
 router.put('/edit_disciplinaryaction/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE disciplinaryaction
-        set type = ?, dateofaction = ?, reason = ?
+        set type = ?, dateofaction = ?, reason = ?, emp_id = ?
         Where id = ?`
     const values = [
         req.body.type,
         req.body.dateofaction,
         req.body.reason,
+        req.body.emp_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
@@ -593,14 +606,15 @@ router.delete('/delete_disciplinaryaction/:id', (req, res) => {
 //MANAGE POSITIONS:
 router.post('/add_position', express.urlencoded({ extended: true }),  (req, res) => {
     const sql =`INSERT INTO empposition
-    (postitle,description,minsalary,maxsalary,requiredskills) 
+    (postitle,description,minsalary,maxsalary,requiredskills, department_id) 
     VALUES (?)`;
     const values = [
         req.body.postitle,
         req.body.description,
         req.body.minsalary,
         req.body.maxsalary,
-        req.body.requiredskills
+        req.body.requiredskills,
+        req.body.department_id
     ];
     con.query(sql, [values], (err, result) => {
         if(err){
@@ -632,14 +646,15 @@ router.get('/position/:id', (req, res) => {
 router.put('/edit_position/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE empposition 
-        set postitle = ?, description = ?, minsalary = ?, maxsalary = ?, requiredskills = ? 
+        set postitle = ?, description = ?, minsalary = ?, maxsalary = ?, requiredskills = ? , department_id = ?
         Where id = ?`
     const values = [
         req.body.postitle,
         req.body.description,
         req.body.minsalary,
         req.body.maxsalary,
-        req.body.requiredskills
+        req.body.requiredskills,
+        req.body.department_id,
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})
@@ -656,6 +671,9 @@ router.delete('/delete_position/:id', (req, res) => {
     })
 })
 
+
+// MANAGE EMPLOYEES
+
 // image upload 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -671,11 +689,9 @@ const upload = multer({
 // end imag eupload 
 
 
-//MANAGE EMPLOYEE
-
 router.post('/add_employee',upload.single('image'), (req, res) => {
     const sql = `INSERT INTO employee 
-    (name,email,password, address, salary,image, department_id) 
+    (name,email,password, address, salary,image, department_id, meeting_id, position_id) 
     VALUES (?)`;
     bcrypt.hash(req.body.password, 10, (err, hash) => {
         if(err) return res.json({Status: false, Error: "Query Error"})
@@ -686,7 +702,9 @@ router.post('/add_employee',upload.single('image'), (req, res) => {
             req.body.address,
             req.body.salary, 
             req.file.filename,
-            req.body.department_id
+            req.body.department_id,
+            req.body.meeting_id,
+            req.body.position_id
         ]
         con.query(sql, [values], (err, result) => {
             if(err) return res.json({Status: false, Error: err})
@@ -715,14 +733,16 @@ router.get('/employee/:id', (req, res) => {
 router.put('/edit_employee/:id', (req, res) => {
     const id = req.params.id;
     const sql = `UPDATE employee 
-        set name = ?, email = ?, salary = ?, address = ?, department_id = ? 
+        set name = ?, email = ?, salary = ?, address = ?, department_id = ?, meeting_id = ?, position_id = ?
         Where id = ?`
     const values = [
         req.body.name,
         req.body.email,
         req.body.salary,
         req.body.address,
-        req.body.department_id
+        req.body.department_id,
+        req.body.meeting_id,
+        req.body.position_id
     ]
     con.query(sql,[...values, id], (err, result) => {
         if(err) return res.json({Status: false, Error: "Query Error"+err})

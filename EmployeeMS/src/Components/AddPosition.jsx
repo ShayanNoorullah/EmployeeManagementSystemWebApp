@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const AddPosition = () => {
@@ -8,10 +8,26 @@ const AddPosition = () => {
         description:"",
         minsalary:"",
         maxsalary:"",
-        requiredskills:""
+        requiredskills:"",
+        department_id: ""
     }, [])
 
     const navigate = useNavigate()
+
+    const [department, setDepartment] = useState([]);
+    useEffect(() => {
+      axios
+        .get("http://localhost:3000/auth/department")
+        .then((result) => {
+          if (result.data.Status) {
+            setDepartment(result.data.Result);
+          } else {
+            alert(result.data.Error);
+          }
+        })
+        .catch((err) => console.log(err));
+    }, []);
+
     const handleSubmit = (e) => {
         e.preventDefault();
         
@@ -20,7 +36,8 @@ const AddPosition = () => {
             description: position.description,
             minsalary: position.minsalary,
             maxsalary: position.maxsalary,
-            requiredskills: position.requiredskills
+            requiredskills: position.requiredskills,
+            department_id: position.department_id
         })
         .then(result => {
             if(result.data.Status) {
@@ -105,6 +122,23 @@ const AddPosition = () => {
                 setPosition({ ...position, requiredskills: e.target.value })
               }
             />
+          </div>
+          <div className="col-12">
+            <label htmlFor="department" className="form-label">
+              Department
+            </label>
+            <select
+              name="department"
+              id="department"
+              className="form-select"
+              onChange={(e) =>
+                setPosition({ ...position, department_id: e.target.value })
+              }
+            >
+              {department.map((c) => {
+                return <option value={c.id}>{c.name}</option>;
+              })}
+            </select>
           </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary w-100">

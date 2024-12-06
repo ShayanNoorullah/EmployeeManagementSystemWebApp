@@ -3,18 +3,23 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AddEmployee = () => {
-  const [employee, setEmployee] = useState({
-    name: "",
-    email: "",
-    password: "",
-    salary: "",
-    address: "",
-    department_id: "",
-    image: "",
-  }, []);
-  const [department, setDepartment] = useState([]);
+  const [employee, setEmployee] = useState(
+    {
+      name: "",
+      email: "",
+      password: "",
+      salary: "",
+      address: "",
+      department_id: "",
+      meeting_id: "",
+      position_id: "",
+      image: ""
+    },
+    []
+  );
   const navigate = useNavigate();
 
+  const [department, setDepartment] = useState([]);
   useEffect(() => {
     axios
       .get("http://localhost:3000/auth/department")
@@ -28,27 +33,61 @@ const AddEmployee = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    const formData = new FormData();
-    formData.append('name', employee.name);
-    formData.append('email', employee.email);
-    formData.append('password', employee.password);
-    formData.append('address', employee.address);
-    formData.append('salary', employee.salary);
-    formData.append('image', employee.image);
-    formData.append('department_id', employee.department_id);
 
-    axios.post('http://localhost:3000/auth/add_employee', formData)
-    .then(result => {
-        if(result.data.Status) {
-            navigate('/dashboard/employee')
+  const [position, setPosition] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/auth/position")
+      .then((result) => {
+        if (result.data.Status) {
+          setPosition(result.data.Result);
         } else {
-            alert(result.data.Error)
+          alert(result.data.Error);
         }
-    })
-    .catch(err => console.log(err))
-  }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+
+  const [meetings, setMeeting] = useState([]);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/auth/meetings")
+      .then((result) => {
+        if (result.data.Status) {
+          setMeeting(result.data.Result);
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", employee.name);
+    formData.append("email", employee.email);
+    formData.append("password", employee.password);
+    formData.append("address", employee.address);
+    formData.append("salary", employee.salary);
+    formData.append("image", employee.image);
+    formData.append("department_id", employee.department_id);
+    formData.append("meeting_id", employee.meeting_id);
+    formData.append("position_id", employee.position_id);
+
+
+    axios
+      .post("http://localhost:3000/auth/add_employee", formData)
+      .then((result) => {
+        if (result.data.Status) {
+          navigate("/dashboard/employee");
+        } else {
+          alert(result.data.Error);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="d-flex justify-content-center align-items-center mt-3">
@@ -130,10 +169,50 @@ const AddEmployee = () => {
             <label htmlFor="department" className="form-label">
               Department
             </label>
-            <select name="department" id="department" className="form-select"
-                onChange={(e) => setEmployee({...employee, department_id: e.target.value})}>
+            <select
+              name="department"
+              id="department"
+              className="form-select"
+              onChange={(e) =>
+                setEmployee({ ...employee, department_id: e.target.value })
+              }
+            >
               {department.map((c) => {
                 return <option value={c.id}>{c.name}</option>;
+              })}
+            </select>
+          </div>          
+          <div className="col-12">
+            <label htmlFor="meeting" className="form-label">
+              Meeting
+            </label>
+            <select
+              name="meeting"
+              id="meeting"
+              className="form-select"
+              onChange={(e) =>
+                setEmployee({ ...employee, meeting_id: e.target.value })
+              }
+            >
+              {meetings.map((c) => {
+                return <option value={c.id}>{c.title}</option>;
+              })}
+            </select>
+          </div>
+          <div className="col-12">
+            <label htmlFor="position" className="form-label">
+              Position
+            </label>
+            <select
+              name="position"
+              id="position"
+              className="form-select"
+              onChange={(e) =>
+                setEmployee({ ...employee, position_id: e.target.value })
+              }
+            >
+              {position.map((c) => {
+                return <option value={c.id}>{c.postitle}</option>;
               })}
             </select>
           </div>
@@ -146,7 +225,9 @@ const AddEmployee = () => {
               className="form-control rounded-0"
               id="inputGroupFile01"
               name="image"
-              onChange={(e) => setEmployee({...employee, image: e.target.files[0]})}
+              onChange={(e) =>
+                setEmployee({ ...employee, image: e.target.files[0] })
+              }
             />
           </div>
           <div className="col-12">

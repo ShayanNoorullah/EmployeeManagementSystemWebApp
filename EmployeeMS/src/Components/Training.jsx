@@ -16,6 +16,9 @@ const Training = () => {
             }
         }).catch(err => console.log(err))
     }, [])
+
+    
+
     const handleDelete = (id) => {
         axios.delete('http://localhost:3000/auth/delete_training/'+id)
         .then(result => {

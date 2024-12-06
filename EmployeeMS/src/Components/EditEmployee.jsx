@@ -10,8 +10,12 @@ const EditEmployee = () => {
         salary: "",
         address: "",
         department_id: "",
+        meeting_id: "",
+        position_id: ""
       });
-      const [department, setDepartment] = useState([])
+      const [department, setDepartment] = useState([]);
+      const [meetings, setMeeting] = useState([]);
+      const [position, setPosition] = useState([]);
       const navigate = useNavigate()
 
       useEffect(()=> {
@@ -23,7 +27,36 @@ const EditEmployee = () => {
                 alert(result.data.Error)
             }
         }).catch(err => console.log(err))
+      }, []);
 
+        useEffect(() => {
+          axios
+            .get("http://localhost:3000/auth/meetings")
+            .then((result) => {
+              if (result.data.Status) {
+                setMeeting(result.data.Result);
+              } else {
+                alert(result.data.Error);
+              }
+            })
+            .catch((err) => console.log(err));
+          }, []);
+        
+        useEffect(() => {
+          axios
+            .get("http://localhost:3000/auth/position")
+            .then((result) => {
+              if (result.data.Status) {
+                setPosition(result.data.Result);
+              } else {
+                alert(result.data.Error);
+              }
+            })
+            .catch((err) => console.log(err));
+        }, []);
+
+        
+        useEffect(() => {
         axios.get('http://localhost:3000/auth/employee/'+id)
         .then(result => {
             setEmployee({
@@ -33,6 +66,8 @@ const EditEmployee = () => {
                 address: result.data.Result[0].address,
                 salary: result.data.Result[0].salary,
                 department_id: result.data.Result[0].department_id,
+                meeting_id: result.data.Result[0].meeting_id,
+                position_id: result.data.Result[0].position_id
             })
         }).catch(err => console.log(err))
     }, [])
@@ -128,7 +163,40 @@ const EditEmployee = () => {
               })}
             </select>
           </div>
-          
+          <div className="col-12">
+            <label htmlFor="meeting" className="form-label">
+              Meeting
+            </label>
+            <select
+              name="meeting"
+              id="meeting"
+              className="form-select"
+              onChange={(e) =>
+                setEmployee({ ...employee, meeting_id: e.target.value })
+              }
+            >
+              {meetings.map((c) => {
+                return <option value={c.id}>{c.title}</option>;
+              })}
+            </select>
+          </div>
+          <div className="col-12">
+            <label htmlFor="position" className="form-label">
+              Position
+            </label>
+            <select
+              name="position"
+              id="position"
+              className="form-select"
+              onChange={(e) =>
+                setEmployee({ ...employee, position_id: e.target.value })
+              }
+            >
+              {position.map((c) => {
+                return <option value={c.id}>{c.postitle}</option>;
+              })}
+            </select>
+          </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary w-100">
               Edit Employee

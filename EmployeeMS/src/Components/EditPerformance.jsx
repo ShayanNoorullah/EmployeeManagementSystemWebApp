@@ -9,6 +9,7 @@ const EditPerformance = () => {
         ratings:"",
         feedback:"",
         goals:"",
+        emp_id:""
     }, [])
       const navigate = useNavigate()
 
@@ -21,9 +22,25 @@ const EditPerformance = () => {
                 ratings: result.data.Result[0].ratings,
                 feedback: result.data.Result[0].feedback,
                 goals: result.data.Result[0].goals,
+                emp_id: result.data.Result[0].emp_id
             })
         }).catch(err => console.log(err))
     }, [])
+
+
+    const [employee, setEmployee] = useState([]);
+    useEffect(() => {
+      axios
+        .get("http://localhost:3000/auth/employee")
+        .then((result) => {
+          if (result.data.Status) {
+            setEmployee(result.data.Result);
+          } else {
+            alert(result.data.Error);
+          }
+        })
+        .catch((err) => console.log(err));
+    }, []);
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -105,6 +122,23 @@ const EditPerformance = () => {
                 setPerformance({ ...performance, goals: e.target.value })
               }
             />
+          </div>
+          <div className="col-12">
+            <label htmlFor="employee" className="form-label">
+              Employee
+            </label>
+            <select
+              name="employee"
+              id="employee"
+              className="form-select"
+              onChange={(e) =>
+                setPerformance({ ...performance, emp_id: e.target.value })
+              }
+            >
+              {employee.map((c) => {
+                return <option value={c.id}>{c.name}</option>;
+              })}
+            </select>
           </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary w-100">

@@ -10,9 +10,25 @@ const EditPayroll = () => {
         deduction:"",
         netsalary:"",
         paydate:"",
-        payperiod:""
+        payperiod:"",
+        emp_id:""
     }, [])
       const navigate = useNavigate()
+
+
+      const [employee, setEmployee] = useState([]);
+      useEffect(() => {
+        axios
+          .get("http://localhost:3000/auth/employee")
+          .then((result) => {
+            if (result.data.Status) {
+              setEmployee(result.data.Result);
+            } else {
+              alert(result.data.Error);
+            }
+          })
+          .catch((err) => console.log(err));
+      }, []);
 
       useEffect(()=> {
         axios.get('http://localhost:3000/auth/payroll/'+id)
@@ -24,7 +40,8 @@ const EditPayroll = () => {
                 deduction: result.data.Result[0].deduction,
                 netsalary: result.data.Result[0].netsalary,
                 paydate: result.data.Result[0].paydate,
-                payperiod: result.data.Result[0].payperiod
+                payperiod: result.data.Result[0].payperiod,
+                emp_id: result.data.Result[0].emp_id
             })
         }).catch(err => console.log(err))
     }, [])
@@ -141,6 +158,23 @@ const EditPayroll = () => {
                 setPayroll({ ...payroll, payperiod: e.target.value })
               }
             />
+          </div>
+          <div className="col-12">
+            <label htmlFor="employee" className="form-label">
+              Employee
+            </label>
+            <select
+              name="employee"
+              id="employee"
+              className="form-select"
+              onChange={(e) =>
+                setPayroll({ ...payroll, emp_id: e.target.value })
+              }
+            >
+              {employee.map((c) => {
+                return <option value={c.id}>{c.name}</option>;
+              })}
+            </select>
           </div>
           <div className="col-12">
             <button type="submit" className="btn btn-primary w-100">
