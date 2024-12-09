@@ -155,6 +155,7 @@ const EditTask = () => {
             </label>
             <select name="employee" id="employee" className="form-select"
                 onChange={(e) => setTask({...task, employee_id: e.target.value})}>
+                  <option value="">Select Employee</option>
               {employee.map((c) => {
                 return <option key={c.id} value={c.id}>{c.name}</option>;
               })}

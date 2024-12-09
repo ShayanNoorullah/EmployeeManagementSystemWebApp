@@ -152,6 +152,7 @@ const EditPosition = () => {
                 setPosition({ ...position, department_id: e.target.value })
               }
             >
+              <option value="">Select Department</option>
               {department.map((c) => {
                 return <option value={c.id}>{c.name}</option>;
               })}

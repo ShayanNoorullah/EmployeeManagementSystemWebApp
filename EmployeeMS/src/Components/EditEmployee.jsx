@@ -158,6 +158,7 @@ const EditEmployee = () => {
             </label>
             <select name="department" id="department" className="form-select"
                 onChange={(e) => setEmployee({...employee, department_id: e.target.value})}>
+                  <option value="">Select Department</option>
               {department.map((c) => {
                 return <option value={c.id}>{c.name}</option>;
               })}
@@ -175,6 +176,7 @@ const EditEmployee = () => {
                 setEmployee({ ...employee, meeting_id: e.target.value })
               }
             >
+              <option value="">Select Meeting</option>
               {meetings.map((c) => {
                 return <option value={c.id}>{c.title}</option>;
               })}
@@ -192,6 +194,7 @@ const EditEmployee = () => {
                 setEmployee({ ...employee, position_id: e.target.value })
               }
             >
+              <option value="">Select Position</option>
               {position.map((c) => {
                 return <option value={c.id}>{c.postitle}</option>;
               })}
